@@ -145,5 +145,5 @@ cython_debug/
 extracted_images/
 
 # Env
-.venv/
-pdfimages/venv/
+.venv
+pdfimages/venv
