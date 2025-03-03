@@ -147,3 +147,4 @@ extracted_images/
 # Env
 .venv
 pdfimages/venv
+.aider*
