@@ -64,7 +64,9 @@ class Configuration:
             config_dict: Optional dictionary with configuration values
             config_file: Optional path to a YAML configuration file
         """
-        self.config = self.DEFAULT_CONFIG.copy()
+        # Create a deep copy of the default config to avoid modifying the class variable
+        self.config = {}
+        self._deep_merge(self.config, self.DEFAULT_CONFIG)
         
         if config_file:
             self.load_from_file(config_file)
@@ -130,7 +132,9 @@ class Configuration:
             raise ConfigurationError("maintain_structure must be a boolean")
         
         valid_formats = ["png", "jpg", "jpeg", "tiff", "bmp"]
-        if not isinstance(self.config["output"]["format"], str) or self.config["output"]["format"].lower() not in valid_formats:
+        if not isinstance(self.config["output"]["format"], str):
+            raise ConfigurationError(f"Output format must be a string")
+        if self.config["output"]["format"].lower() not in valid_formats:
             raise ConfigurationError(f"Output format must be one of: {', '.join(valid_formats)}")
         
         # Validate processing configuration

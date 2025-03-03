@@ -51,6 +51,7 @@ output:
 processing:
   min_width: 200
   min_height: 200
+  quality: 90
 """
         temp.write(yaml_content)
         temp_path = temp.name
