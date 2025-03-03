@@ -12,14 +12,9 @@ from pdfimages.utils.config import Configuration, ConfigurationError
 @pytest.fixture
 def config():
     """Fixture to provide a fresh Configuration instance for each test."""
-    # Create a configuration with valid values to avoid validation errors
-    return Configuration(config_dict={
-        "output": {"format": "png"},
-        "processing": {
-            "quality": 90,
-            "scaling": 1.0
-        }
-    })
+    # Load configuration from the default config file
+    # This ensures tests use the same defaults as the application
+    return Configuration()
 
 
 def test_default_configuration(config):
