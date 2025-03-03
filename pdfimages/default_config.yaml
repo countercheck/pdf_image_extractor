@@ -1,0 +1,47 @@
+# Default configuration for pdfimages
+
+output:
+  # Directory where extracted images will be saved
+  directory: "extracted_images"
+  # Whether to maintain the directory structure of input PDFs
+  maintain_structure: true
+  # Output format for images (png, jpg, jpeg, tiff, bmp)
+  format: "png"
+  # Pattern for naming output files
+  naming_pattern: "page_{page:03d}_{index:03d}"
+
+processing:
+  # Minimum dimensions for extracted images (in pixels)
+  min_width: 100
+  min_height: 100
+  # Maximum dimensions for extracted images (in pixels, null for no limit)
+  max_width: null
+  max_height: null
+  # Quality for lossy formats (0-100)
+  quality: 90
+  # Scaling factor for images (0-10)
+  scaling: 1.0
+  # DPI for image extraction
+  dpi: 300
+  # Whether to deduplicate images
+  deduplicate: true
+  # Threshold for image similarity (0-1)
+  similarity_threshold: 0.95
+
+filters:
+  # Types of objects to include (images, forms, all)
+  include_types: ["images", "forms", "all"]
+  # Types of objects to exclude
+  exclude_types: []
+  # Minimum size for extracted images (in bytes)
+  min_size_bytes: 1024
+  # Maximum size for extracted images (in bytes, null for no limit)
+  max_size_bytes: null
+
+logging:
+  # Logging level (DEBUG, INFO, WARNING, ERROR, CRITICAL)
+  level: "INFO"
+  # Log file (null for no file logging)
+  file: null
+  # Whether to log to console
+  console: true
