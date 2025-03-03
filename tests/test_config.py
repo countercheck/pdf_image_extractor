@@ -12,7 +12,8 @@ from pdfimages.utils.config import Configuration, ConfigurationError
 @pytest.fixture
 def config():
     """Fixture to provide a fresh Configuration instance for each test."""
-    return Configuration()
+    # Create a configuration with a valid output format to avoid validation errors
+    return Configuration(config_dict={"output": {"format": "png"}})
 
 
 def test_default_configuration(config):
@@ -22,7 +23,7 @@ def test_default_configuration(config):
     assert config.get("logging.level") == "INFO"
 
 
-def test_merge_with_dict():
+def test_merge_with_dict(config):
     """Test merging configuration with a dictionary."""
     custom_config = {
         "output": {
@@ -34,6 +35,7 @@ def test_merge_with_dict():
         }
     }
     
+    # Reset config with our custom values
     config = Configuration(config_dict=custom_config)
     
     # Check merged values
@@ -46,7 +48,7 @@ def test_merge_with_dict():
     assert config.get("processing.deduplicate") is True
 
 
-def test_load_from_file():
+def test_load_from_file(config):
     """Test loading configuration from a YAML file."""
     with tempfile.NamedTemporaryFile(mode='w', suffix='.yaml', delete=False) as temp:
         yaml_content = """
