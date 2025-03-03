@@ -135,7 +135,7 @@ class Configuration:
         if not isinstance(self.config["output"]["format"], str):
             raise ConfigurationError(f"Output format must be a string")
         if self.config["output"]["format"].lower() not in valid_formats:
-            raise ConfigurationError(f"Output format must be one of: {', '.join(valid_formats)}")
+            raise ConfigurationError(f"Output format must be one of: {', '.join(valid_formats)}, instead found: {self.config['output']['format']}")
         
         # Validate processing configuration
         for param in ["min_width", "min_height", "quality"]:

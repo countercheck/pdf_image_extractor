@@ -4,6 +4,7 @@ import os
 import tempfile
 import yaml
 import pytest
+import copy
 from pathlib import Path
 
 from pdfimages.utils.config import Configuration, ConfigurationError
@@ -14,7 +15,7 @@ def config():
     """Fixture to provide a fresh Configuration instance for each test."""
     # Load configuration from the default config file
     # This ensures tests use the same defaults as the application
-    return Configuration()
+    return copy.deepcopy(Configuration())
 
 
 def test_default_configuration(config):
