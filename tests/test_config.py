@@ -15,7 +15,10 @@ def config():
     # Create a configuration with valid values to avoid validation errors
     return Configuration(config_dict={
         "output": {"format": "png"},
-        "processing": {"quality": 90}
+        "processing": {
+            "quality": 90,
+            "scaling": 1.0
+        }
     })
 
 
