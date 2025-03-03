@@ -98,41 +98,36 @@ def test_nonexistent_file():
         Configuration(config_file="/path/to/nonexistent/config.yaml")
 
 
-def test_validation(config):
-    """Test validation of configuration values."""
-    # Test invalid output format
+def test_validation_invalid_output_format(config):
+    """Test validation of invalid output format."""
     with pytest.raises(ConfigurationError):
         config.merge_config({"output": {"format": "invalid"}})
         config.validate()
-    
-    # Reset config for next test
-    config = Configuration()
-    
-    # Test invalid quality value
+
+
+def test_validation_invalid_quality(config):
+    """Test validation of invalid quality value."""
     with pytest.raises(ConfigurationError):
         config.merge_config({"processing": {"quality": 101}})
         config.validate()
-    
-    # Reset config for next test
-    config = Configuration()
-    
-    # Test invalid scaling value
+
+
+def test_validation_invalid_scaling(config):
+    """Test validation of invalid scaling value."""
     with pytest.raises(ConfigurationError):
         config.merge_config({"processing": {"scaling": 0}})
         config.validate()
-    
-    # Reset config for next test
-    config = Configuration()
-    
-    # Test invalid similarity threshold
+
+
+def test_validation_invalid_similarity_threshold(config):
+    """Test validation of invalid similarity threshold."""
     with pytest.raises(ConfigurationError):
         config.merge_config({"processing": {"similarity_threshold": 1.5}})
         config.validate()
-    
-    # Reset config for next test
-    config = Configuration()
-    
-    # Test invalid log level
+
+
+def test_validation_invalid_log_level(config):
+    """Test validation of invalid log level."""
     with pytest.raises(ConfigurationError):
         config.merge_config({"logging": {"level": "INVALID"}})
         config.validate()
