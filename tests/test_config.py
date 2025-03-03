@@ -120,6 +120,9 @@ def test_get_set_methods():
     # Test get with default
     assert config.get("nonexistent.key", "default") == "default"
     
+    # Test default output format is present
+    assert config.get("output.format") is not None
+    
     # Test set and get
     config.set("output.new_option", "value")
     assert config.get("output.new_option") == "value"
@@ -136,6 +139,7 @@ def test_as_dict():
     
     assert isinstance(config_dict, dict)
     assert config_dict["output"]["directory"] == "extracted_images"
+    assert config_dict["output"]["format"] is not None  # Ensure format is present
     assert config_dict["processing"]["quality"] == 90
 
 
