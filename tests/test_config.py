@@ -9,7 +9,7 @@ from pathlib import Path
 from pdfimages.utils.config import Configuration, ConfigurationError
 
 
-@pytest.fixture
+@pytest.fixture(scope="function")
 def config():
     """Fixture to provide a fresh Configuration instance for each test."""
     # Load configuration from the default config file
@@ -36,8 +36,8 @@ def test_merge_with_dict(config):
         }
     }
     
-    # Reset config with our custom values
-    config = Configuration(config_dict=custom_config)
+    # Merge our custom values with the config
+    config.merge_config(custom_config)
     
     # Check merged values
     assert config.get("output.directory") == "custom_output"
@@ -65,7 +65,7 @@ processing:
         temp_path = temp.name
     
     try:
-        config = Configuration(config_file=temp_path)
+        config.load_from_file(temp_path)
         
         # Check loaded values
         assert config.get("output.directory") == "file_output"
@@ -98,27 +98,44 @@ def test_nonexistent_file():
         Configuration(config_file="/path/to/nonexistent/config.yaml")
 
 
-def test_validation():
+def test_validation(config):
     """Test validation of configuration values."""
     # Test invalid output format
     with pytest.raises(ConfigurationError):
-        Configuration(config_dict={"output": {"format": "invalid"}})
+        config.merge_config({"output": {"format": "invalid"}})
+        config.validate()
+    
+    # Reset config for next test
+    config = Configuration()
     
     # Test invalid quality value
     with pytest.raises(ConfigurationError):
-        Configuration(config_dict={"processing": {"quality": 101}})
+        config.merge_config({"processing": {"quality": 101}})
+        config.validate()
+    
+    # Reset config for next test
+    config = Configuration()
     
     # Test invalid scaling value
     with pytest.raises(ConfigurationError):
-        Configuration(config_dict={"processing": {"scaling": 0}})
+        config.merge_config({"processing": {"scaling": 0}})
+        config.validate()
+    
+    # Reset config for next test
+    config = Configuration()
     
     # Test invalid similarity threshold
     with pytest.raises(ConfigurationError):
-        Configuration(config_dict={"processing": {"similarity_threshold": 1.5}})
+        config.merge_config({"processing": {"similarity_threshold": 1.5}})
+        config.validate()
+    
+    # Reset config for next test
+    config = Configuration()
     
     # Test invalid log level
     with pytest.raises(ConfigurationError):
-        Configuration(config_dict={"logging": {"level": "INVALID"}})
+        config.merge_config({"logging": {"level": "INVALID"}})
+        config.validate()
 
 
 def test_get_set_methods(config):
