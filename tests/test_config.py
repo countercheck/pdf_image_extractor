@@ -9,9 +9,14 @@ from pathlib import Path
 from pdfimages.utils.config import Configuration, ConfigurationError
 
 
-def test_default_configuration():
+@pytest.fixture
+def config():
+    """Fixture to provide a fresh Configuration instance for each test."""
+    return Configuration()
+
+
+def test_default_configuration(config):
     """Test that default configuration is loaded correctly."""
-    config = Configuration()
     assert config.get("output.directory") == "extracted_images"
     assert config.get("processing.quality") == 90
     assert config.get("logging.level") == "INFO"
@@ -113,9 +118,8 @@ def test_validation():
         Configuration(config_dict={"logging": {"level": "INVALID"}})
 
 
-def test_get_set_methods():
+def test_get_set_methods(config):
     """Test get and set methods for configuration values."""
-    config = Configuration()
     
     # Test get with default
     assert config.get("nonexistent.key", "default") == "default"
@@ -132,9 +136,8 @@ def test_get_set_methods():
     assert config.get("new_section.nested.option") == 42
 
 
-def test_as_dict():
+def test_as_dict(config):
     """Test converting configuration to dictionary."""
-    config = Configuration()
     config_dict = config.as_dict()
     
     assert isinstance(config_dict, dict)
