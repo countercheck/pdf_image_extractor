@@ -45,13 +45,13 @@ def test_load_from_file():
     """Test loading configuration from a YAML file."""
     with tempfile.NamedTemporaryFile(mode='w', suffix='.yaml', delete=False) as temp:
         yaml_content = """
-        output:
-          directory: file_output
-          format: tiff
-        processing:
-          min_width: 200
-          min_height: 200
-        """
+output:
+  directory: file_output
+  format: tiff
+processing:
+  min_width: 200
+  min_height: 200
+"""
         temp.write(yaml_content)
         temp_path = temp.name
     
