@@ -129,8 +129,9 @@ class Configuration:
         if not isinstance(self.config["output"]["maintain_structure"], bool):
             raise ConfigurationError("maintain_structure must be a boolean")
         
-        if self.config["output"]["format"] not in ["png", "jpg", "jpeg", "tiff", "bmp"]:
-            raise ConfigurationError("Output format must be one of: png, jpg, jpeg, tiff, bmp")
+        valid_formats = ["png", "jpg", "jpeg", "tiff", "bmp"]
+        if not isinstance(self.config["output"]["format"], str) or self.config["output"]["format"].lower() not in valid_formats:
+            raise ConfigurationError(f"Output format must be one of: {', '.join(valid_formats)}")
         
         # Validate processing configuration
         for param in ["min_width", "min_height", "quality"]:
